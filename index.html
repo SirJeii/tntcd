@@ -15,6 +15,10 @@
             --sti-red: #ef4444;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Open Sans', sans-serif;
             background: linear-gradient(180deg, #A5D3E8 0%, #D4EADD 100%);
@@ -25,7 +29,8 @@
             align-items: center;
             justify-content: center;
             margin: 0;
-            padding: 0;
+            /* CRITICAL: This padding creates the "Zoomed Out" effect by forcing a safe area */
+            padding: 4vmin; 
         }
 
         .font-poster { font-family: 'Montserrat', sans-serif; }
@@ -36,20 +41,22 @@
         }
 
         .tv-wrapper {
-            transform: scale(0.9);
-            width: 95%;
-            height: 95%; /* Increased height usage */
+            /* Removed transform scale to rely on natural padding sizing */
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
+            /* Optional: border to see safe area boundaries during setup */
+            /* border: 1px dashed rgba(0,0,0,0.1); */
         }
 
         /* Container for the two cards */
         .cards-container {
             display: flex;
-            gap: 30px;
+            gap: 20px; /* Reduced gap slightly */
             width: 100%;
             flex: 1; /* Takes available space */
             align-items: stretch;
@@ -60,9 +67,9 @@
         /* Generic Card Style */
         .card {
             border: 4px solid white;
-            border-radius: 40px;
+            border-radius: 30px;
             box-shadow: 0px 10px 20px rgba(0,0,0,0.3), 0 0 0 4px black;
-            padding: 20px 30px; /* Reduced padding slightly */
+            padding: 20px 20px;
             text-align: center;
             position: relative;
             flex: 1; 
@@ -92,17 +99,17 @@
             box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
             z-index: 20;
         }
-        .bolt-tl { top: 20px; left: 20px; }
-        .bolt-tr { top: 20px; right: 20px; }
-        .bolt-bl { bottom: 20px; left: 20px; }
-        .bolt-br { bottom: 20px; right: 20px; }
+        .bolt-tl { top: 15px; left: 15px; }
+        .bolt-tr { top: 15px; right: 15px; }
+        .bolt-bl { bottom: 15px; left: 15px; }
+        .bolt-br { bottom: 15px; right: 15px; }
 
         .countdown-box {
             background-color: #1a1a1a;
             border: 2px solid white;
             border-radius: 10px;
-            padding: 10px 5px;
-            min-width: 65px;
+            padding: 8px 4px;
+            min-width: 55px; /* Compact width */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -117,8 +124,8 @@
 
         .qr-card {
             position: absolute;
-            bottom: 10px; 
-            left: 20px;   
+            bottom: 0px; 
+            left: 0px;   
             transform: rotate(-3deg);
             background: white;
             padding: 10px;
@@ -166,8 +173,7 @@
             font-weight: 900;
             letter-spacing: 0.05em;
             text-align: center;
-            margin-bottom: 25px;
-            /* Stroke effect using shadows */
+            margin-bottom: 20px;
             text-shadow: 
                 2px 2px 0px #fff,
                 -1px -1px 0 #fff,  
@@ -181,7 +187,6 @@
 <body>
 
     <!-- Audio Element (Hidden) -->
-    <!-- Replace 'src' with your local file or desired URL -->
     <audio id="bgMusic" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
@@ -194,19 +199,19 @@
     <div class="tv-wrapper">
         
         <!-- Background Trees -->
-        <svg class="tree-graphic" style="left: -20px; bottom: 20px; width: 120px;" viewBox="0 0 100 150">
+        <svg class="tree-graphic" style="left: -40px; bottom: 10px; width: 120px;" viewBox="0 0 100 150">
             <polygon points="50,10 20,60 80,60" />
             <polygon points="50,40 15,100 85,100" />
             <rect x="42" y="100" width="16" height="30" fill="#3f2e18" stroke="black" stroke-width="2"/>
         </svg>
-        <svg class="tree-graphic" style="right: -20px; top: 40px; width: 100px;" viewBox="0 0 100 150">
+        <svg class="tree-graphic" style="right: -40px; top: 20px; width: 100px;" viewBox="0 0 100 150">
             <polygon points="50,10 20,60 80,60" />
             <polygon points="50,40 15,100 85,100" />
             <rect x="42" y="100" width="16" height="30" fill="#3f2e18" stroke="black" stroke-width="2"/>
         </svg>
 
         <!-- MAIN TITLE HEADER -->
-        <h1 class="main-header text-5xl md:text-7xl">STI College Marikina</h1>
+        <h1 class="main-header text-4xl md:text-6xl">STI College Marikina</h1>
 
         <div class="cards-container">
             
@@ -217,35 +222,35 @@
                 <div class="bolt bolt-bl"></div>
                 <div class="bolt bolt-br"></div>
 
-                <!-- Content Wrapper to center content vertically in available space -->
+                <!-- Content Wrapper -->
                 <div class="flex-1 flex flex-col justify-center items-center w-full">
-                    <h3 class="font-poster text-white text-base md:text-lg font-bold uppercase tracking-widest mb-1">Event Registration</h3>
-                    <h2 class="font-poster text-white text-2xl md:text-3xl font-black uppercase tracking-wider mb-0">Tagisan ng</h2>
-                    <h1 class="font-poster text-[var(--sti-yellow)] text-6xl md:text-7xl font-black uppercase leading-none title-stroke mb-2">TALINO</h1>
-                    <h3 class="font-poster text-white text-base md:text-lg font-bold uppercase tracking-widest mb-4">Local Level Competition</h3>
+                    <h3 class="font-poster text-white text-sm md:text-base font-bold uppercase tracking-widest mb-1">Event Registration</h3>
+                    <h2 class="font-poster text-white text-xl md:text-2xl font-black uppercase tracking-wider mb-0">Tagisan ng</h2>
+                    <h1 class="font-poster text-[var(--sti-yellow)] text-5xl md:text-6xl font-black uppercase leading-none title-stroke mb-2">TALINO</h1>
+                    <h3 class="font-poster text-white text-sm md:text-base font-bold uppercase tracking-widest mb-4">Local Level Competition</h3>
 
                     <div class="bg-white/10 border border-white/30 rounded-lg px-4 py-1 mb-2">
-                        <span class="font-poster text-white font-bold text-sm">Deadline: Feb 15, 2026</span>
+                        <span class="font-poster text-white font-bold text-xs md:text-sm">Deadline: Feb 15, 2026</span>
                     </div>
                 </div>
 
-                <!-- Timer pushed to bottom for alignment -->
+                <!-- Timer -->
                 <div class="flex justify-center gap-2 mt-auto">
                     <div class="countdown-box">
-                        <span id="days1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Days</span>
+                        <span id="days1" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Days</span>
                     </div>
                     <div class="countdown-box">
-                        <span id="hours1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Hrs</span>
+                        <span id="hours1" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Hrs</span>
                     </div>
                     <div class="countdown-box">
-                        <span id="minutes1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Mins</span>
+                        <span id="minutes1" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Mins</span>
                     </div>
                     <div class="countdown-box border-red-500">
-                        <span id="seconds1" class="font-mono text-red-500 text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Secs</span>
+                        <span id="seconds1" class="font-mono text-red-500 text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Secs</span>
                     </div>
                 </div>
             </div>
@@ -257,51 +262,51 @@
                 <div class="bolt bolt-bl bg-gray-400"></div>
                 <div class="bolt bolt-br bg-gray-400"></div>
 
-                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-4 py-1 rounded-full border-2 border-black font-poster font-bold text-sm uppercase tracking-wider shadow-md whitespace-nowrap">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-3 py-1 rounded-full border-2 border-black font-poster font-bold text-xs uppercase tracking-wider shadow-md whitespace-nowrap">
                     Required
                 </div>
 
-                <!-- Content Wrapper to center content vertically in available space -->
+                <!-- Content Wrapper -->
                 <div class="flex-1 flex flex-col justify-center items-center w-full">
-                    <h3 class="font-poster text-slate-500 text-base md:text-lg font-bold uppercase tracking-widest mb-1">Academic Notice</h3>
+                    <h3 class="font-poster text-slate-500 text-sm md:text-base font-bold uppercase tracking-widest mb-1">Academic Notice</h3>
                     <h1 class="font-poster text-[var(--sti-blue)] text-4xl md:text-5xl font-black uppercase leading-none mb-2">PRELIM<br>EXAM</h1>
-                    <h2 class="font-poster text-black text-xl md:text-2xl font-bold uppercase tracking-tighter mb-4">Attendance Form Validation</h2>
+                    <h2 class="font-poster text-black text-lg md:text-xl font-bold uppercase tracking-tighter mb-4">Attendance Form Validation</h2>
 
                     <div class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-2">
-                        <span class="font-poster text-red-600 font-black text-lg block">FEB 9 - 16, 2026</span>
+                        <span class="font-poster text-red-600 font-black text-base md:text-lg block">FEB 9 - 16, 2026</span>
                     </div>
                 </div>
 
-                <!-- Timer pushed to bottom for alignment -->
+                <!-- Timer -->
                 <div class="flex justify-center gap-2 mt-auto">
                     <div class="countdown-box light-theme">
-                        <span id="days2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Days</span>
+                        <span id="days2" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Days</span>
                     </div>
                     <div class="countdown-box light-theme">
-                        <span id="hours2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Hrs</span>
+                        <span id="hours2" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Hrs</span>
                     </div>
                     <div class="countdown-box light-theme">
-                        <span id="minutes2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Mins</span>
+                        <span id="minutes2" class="font-mono text-white text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Mins</span>
                     </div>
                     <div class="countdown-box light-theme border-red-500">
-                        <span id="seconds2" class="font-mono text-red-400 text-3xl font-bold leading-none">00</span>
-                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Secs</span>
+                        <span id="seconds2" class="font-mono text-red-400 text-2xl md:text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[8px] font-bold uppercase mt-1">Secs</span>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <div class="mt-8 text-[var(--sti-blue)] font-black text-2xl uppercase tracking-tighter opacity-80">
+        <div class="mt-4 text-[var(--sti-blue)] font-black text-xl md:text-2xl uppercase tracking-tighter opacity-80">
             Be More. Be STI.
         </div>
 
         <div class="qr-card">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sticmtnt.netlify.app/" class="w-20 h-20 block border-2 border-black">
-            <div class="font-poster text-[var(--sti-blue)] font-black text-xs uppercase mt-1 tracking-wider">Scan Link</div>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sticmtnt.netlify.app/" class="w-16 h-16 md:w-20 md:h-20 block border-2 border-black">
+            <div class="font-poster text-[var(--sti-blue)] font-black text-[10px] uppercase mt-1 tracking-wider">Scan Link</div>
         </div>
 
     </div>
