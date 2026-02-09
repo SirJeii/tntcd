@@ -12,11 +12,11 @@
         :root {
             --sti-blue: #005596;
             --sti-yellow: #FFD100;
+            --sti-red: #ef4444;
         }
 
         body {
             font-family: 'Open Sans', sans-serif;
-            /* Light gradient background matching the reference */
             background: linear-gradient(180deg, #A5D3E8 0%, #D4EADD 100%);
             height: 100vh;
             width: 100vw;
@@ -30,17 +30,15 @@
 
         .font-poster { font-family: 'Montserrat', sans-serif; }
         
-        /* Text Stroke for TALINO */
         .title-stroke { 
             -webkit-text-stroke: 2px black; 
             text-shadow: 4px 4px 0px #000; 
         }
 
-        /* TV Scaling Wrapper - Ensures safe zone */
         .tv-wrapper {
-            transform: scale(0.85); /* Scales down content to prevent TV crop */
-            width: 100%;
-            height: 100%;
+            transform: scale(0.9);
+            width: 95%;
+            height: 95%; /* Increased height usage */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -48,35 +46,43 @@
             position: relative;
         }
 
-        /* Tree Styles */
-        .tree-graphic {
-            position: absolute;
-            left: 5%;
-            z-index: 0;
-            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));
+        /* Container for the two cards */
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            flex: 1; /* Takes available space */
+            align-items: stretch;
+            justify-content: center;
+            min-height: 0; /* Prevents overflow */
         }
 
-        .tree-graphic polygon {
-            fill: #22c55e;
-            stroke: black;
-            stroke-width: 2;
-        }
-
-        /* Main Signboard */
-        .signboard {
-            background-color: var(--sti-blue);
+        /* Generic Card Style */
+        .card {
             border: 4px solid white;
             border-radius: 40px;
-            box-shadow: 0px 10px 20px rgba(0,0,0,0.3), 0 0 0 4px black; /* Double border effect */
-            padding: 40px 60px;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.3), 0 0 0 4px black;
+            padding: 20px 30px; /* Reduced padding slightly */
             text-align: center;
             position: relative;
-            max-width: 900px;
-            width: 80%;
-            z-index: 10;
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            align-items: center;
         }
 
-        /* Corner Bolts */
+        /* Event Card (Left) */
+        .card-event {
+            background-color: var(--sti-blue);
+        }
+
+        /* Exam Card (Right) */
+        .card-exam {
+            background-color: white;
+            border-color: var(--sti-blue);
+        }
+
         .bolt {
             position: absolute;
             width: 12px;
@@ -84,134 +90,273 @@
             background: #d1d5db;
             border-radius: 50%;
             box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 20;
         }
         .bolt-tl { top: 20px; left: 20px; }
         .bolt-tr { top: 20px; right: 20px; }
         .bolt-bl { bottom: 20px; left: 20px; }
         .bolt-br { bottom: 20px; right: 20px; }
 
-        /* Countdown Boxes */
         .countdown-box {
             background-color: #1a1a1a;
             border: 2px solid white;
-            border-radius: 12px;
-            padding: 15px 10px;
-            min-width: 100px;
+            border-radius: 10px;
+            padding: 10px 5px;
+            min-width: 65px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        /* QR Code Card */
+        /* Dark mode for white card */
+        .countdown-box.light-theme {
+            background-color: var(--sti-blue);
+            border-color: black;
+        }
+
         .qr-card {
             position: absolute;
-            bottom: 5%;
-            right: 5%;
+            bottom: 10px; 
+            left: 20px;   
+            transform: rotate(-3deg);
             background: white;
-            padding: 15px 15px 10px 15px;
+            padding: 10px;
             border-radius: 15px;
             border: 3px solid black;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.8);
-            transform: rotate(-3deg);
-            z-index: 20;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+            z-index: 30;
             text-align: center;
+        }
+
+        .tree-graphic {
+            position: absolute;
+            z-index: -1;
+            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));
+        }
+        .tree-graphic polygon { fill: #22c55e; stroke: black; stroke-width: 2; }
+
+        /* Mute Button */
+        .mute-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 3px solid black;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--sti-blue);
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+            transition: transform 0.1s;
+        }
+        .mute-btn:active { transform: scale(0.95); }
+
+        /* Main Header Style */
+        .main-header {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--sti-blue);
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-align: center;
+            margin-bottom: 25px;
+            /* Stroke effect using shadows */
+            text-shadow: 
+                2px 2px 0px #fff,
+                -1px -1px 0 #fff,  
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff,
+                1px 1px 0 #fff;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.15));
         }
     </style>
 </head>
 <body>
 
+    <!-- Audio Element (Hidden) -->
+    <!-- Replace 'src' with your local file or desired URL -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Mute Button Control -->
+    <button id="muteToggle" class="mute-btn" title="Toggle Music">
+        <i class="fas fa-volume-mute" id="muteIcon"></i>
+    </button>
+
     <div class="tv-wrapper">
         
-        <!-- Decoration: Trees on the left -->
-        <svg class="tree-graphic" style="top: 10%; width: 100px;" viewBox="0 0 100 150">
-            <!-- Top Triangle -->
+        <!-- Background Trees -->
+        <svg class="tree-graphic" style="left: -20px; bottom: 20px; width: 120px;" viewBox="0 0 100 150">
             <polygon points="50,10 20,60 80,60" />
-            <!-- Middle Triangle -->
             <polygon points="50,40 15,100 85,100" />
-            <!-- Trunk -->
+            <rect x="42" y="100" width="16" height="30" fill="#3f2e18" stroke="black" stroke-width="2"/>
+        </svg>
+        <svg class="tree-graphic" style="right: -20px; top: 40px; width: 100px;" viewBox="0 0 100 150">
+            <polygon points="50,10 20,60 80,60" />
+            <polygon points="50,40 15,100 85,100" />
             <rect x="42" y="100" width="16" height="30" fill="#3f2e18" stroke="black" stroke-width="2"/>
         </svg>
 
-        <svg class="tree-graphic" style="bottom: 10%; width: 140px;" viewBox="0 0 100 150">
-            <!-- Top Triangle -->
-            <polygon points="50,10 20,60 80,60" />
-            <!-- Middle Triangle -->
-            <polygon points="50,40 15,100 85,100" />
-            <!-- Trunk -->
-            <rect x="42" y="100" width="16" height="30" fill="#3f2e18" stroke="black" stroke-width="2"/>
-        </svg>
+        <!-- MAIN TITLE HEADER -->
+        <h1 class="main-header text-5xl md:text-7xl">STI College Marikina</h1>
 
-        <!-- Main Center Signboard -->
-        <div class="signboard">
-            <!-- Bolts -->
-            <div class="bolt bolt-tl"></div>
-            <div class="bolt bolt-tr"></div>
-            <div class="bolt bolt-bl"></div>
-            <div class="bolt bolt-br"></div>
-
-            <!-- Header Text -->
-            <h3 class="font-poster text-white text-lg md:text-xl font-bold uppercase tracking-[0.15em] mb-1">STI College Marikina</h3>
-            <h2 class="font-poster text-white text-3xl md:text-4xl font-black uppercase tracking-wider mb-2">Tagisan ng</h2>
+        <div class="cards-container">
             
-            <!-- Main Title -->
-            <h1 class="font-poster text-[var(--sti-yellow)] text-7xl md:text-9xl font-black uppercase leading-none title-stroke mb-6">TALINO</h1>
+            <!-- CARD 1: TAGISAN NG TALINO (Blue) -->
+            <div class="card card-event">
+                <div class="bolt bolt-tl"></div>
+                <div class="bolt bolt-tr"></div>
+                <div class="bolt bolt-bl"></div>
+                <div class="bolt bolt-br"></div>
 
-            <!-- Year Pill -->
-            <div class="inline-block bg-white border-2 border-black rounded-full px-8 py-1 mb-8 shadow-[4px_4px_0px_rgba(0,0,0,0.5)]">
-                <span class="font-poster text-black font-black text-xl md:text-2xl">2025 - 2026</span>
+                <!-- Content Wrapper to center content vertically in available space -->
+                <div class="flex-1 flex flex-col justify-center items-center w-full">
+                    <h3 class="font-poster text-white text-base md:text-lg font-bold uppercase tracking-widest mb-1">Event Registration</h3>
+                    <h2 class="font-poster text-white text-2xl md:text-3xl font-black uppercase tracking-wider mb-0">Tagisan ng</h2>
+                    <h1 class="font-poster text-[var(--sti-yellow)] text-6xl md:text-7xl font-black uppercase leading-none title-stroke mb-2">TALINO</h1>
+                    <h3 class="font-poster text-white text-base md:text-lg font-bold uppercase tracking-widest mb-4">Local Level Competition</h3>
+
+                    <div class="bg-white/10 border border-white/30 rounded-lg px-4 py-1 mb-2">
+                        <span class="font-poster text-white font-bold text-sm">Deadline: Feb 15, 2026</span>
+                    </div>
+                </div>
+
+                <!-- Timer pushed to bottom for alignment -->
+                <div class="flex justify-center gap-2 mt-auto">
+                    <div class="countdown-box">
+                        <span id="days1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Days</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span id="hours1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Hrs</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span id="minutes1" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Mins</span>
+                    </div>
+                    <div class="countdown-box border-red-500">
+                        <span id="seconds1" class="font-mono text-red-500 text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Secs</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Deadline Text -->
-            <p class="font-poster text-white text-sm md:text-base font-bold uppercase tracking-widest mb-4">Registration Deadline Ends In:</p>
+            <!-- CARD 2: PRELIM EXAM (White) -->
+            <div class="card card-exam">
+                <div class="bolt bolt-tl bg-gray-400"></div>
+                <div class="bolt bolt-tr bg-gray-400"></div>
+                <div class="bolt bolt-bl bg-gray-400"></div>
+                <div class="bolt bolt-br bg-gray-400"></div>
 
-            <!-- Countdown Timer -->
-            <div class="flex justify-center gap-4">
-                <div class="countdown-box">
-                    <span id="days" class="font-mono text-[var(--sti-yellow)] text-4xl md:text-5xl font-bold leading-none">00</span>
-                    <span class="text-white text-[10px] md:text-xs font-bold uppercase mt-1">Days</span>
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-4 py-1 rounded-full border-2 border-black font-poster font-bold text-sm uppercase tracking-wider shadow-md whitespace-nowrap">
+                    Required
                 </div>
-                <div class="countdown-box">
-                    <span id="hours" class="font-mono text-[var(--sti-yellow)] text-4xl md:text-5xl font-bold leading-none">00</span>
-                    <span class="text-white text-[10px] md:text-xs font-bold uppercase mt-1">Hrs</span>
+
+                <!-- Content Wrapper to center content vertically in available space -->
+                <div class="flex-1 flex flex-col justify-center items-center w-full">
+                    <h3 class="font-poster text-slate-500 text-base md:text-lg font-bold uppercase tracking-widest mb-1">Academic Notice</h3>
+                    <h1 class="font-poster text-[var(--sti-blue)] text-4xl md:text-5xl font-black uppercase leading-none mb-2">PRELIM<br>EXAM</h1>
+                    <h2 class="font-poster text-black text-xl md:text-2xl font-bold uppercase tracking-tighter mb-4">Attendance Form Validation</h2>
+
+                    <div class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-2">
+                        <span class="font-poster text-red-600 font-black text-lg block">FEB 9 - 16, 2026</span>
+                    </div>
                 </div>
-                <div class="countdown-box">
-                    <span id="minutes" class="font-mono text-[var(--sti-yellow)] text-4xl md:text-5xl font-bold leading-none">00</span>
-                    <span class="text-white text-[10px] md:text-xs font-bold uppercase mt-1">Mins</span>
-                </div>
-                <div class="countdown-box">
-                    <span id="seconds" class="font-mono text-red-500 text-4xl md:text-5xl font-bold leading-none">00</span>
-                    <span class="text-white text-[10px] md:text-xs font-bold uppercase mt-1">Secs</span>
+
+                <!-- Timer pushed to bottom for alignment -->
+                <div class="flex justify-center gap-2 mt-auto">
+                    <div class="countdown-box light-theme">
+                        <span id="days2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Days</span>
+                    </div>
+                    <div class="countdown-box light-theme">
+                        <span id="hours2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Hrs</span>
+                    </div>
+                    <div class="countdown-box light-theme">
+                        <span id="minutes2" class="font-mono text-white text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Mins</span>
+                    </div>
+                    <div class="countdown-box light-theme border-red-500">
+                        <span id="seconds2" class="font-mono text-red-400 text-3xl font-bold leading-none">00</span>
+                        <span class="text-[var(--sti-yellow)] text-[9px] font-bold uppercase mt-1">Secs</span>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <!-- Footer Text -->
-        <div class="mt-6">
-            <h4 class="font-poster text-[#005596] font-bold text-lg md:text-xl uppercase tracking-wider opacity-80">Be More. Be STI.</h4>
+        <div class="mt-8 text-[var(--sti-blue)] font-black text-2xl uppercase tracking-tighter opacity-80">
+            Be More. Be STI.
         </div>
 
-        <!-- QR Code (Bottom Right) -->
         <div class="qr-card">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sticmtnt.netlify.app/" class="w-24 h-24 md:w-28 md:h-28 block border-2 border-black">
-            <div class="font-poster text-[var(--sti-blue)] font-black text-sm uppercase mt-1 tracking-wider">Scan Me</div>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://sticmtnt.netlify.app/" class="w-20 h-20 block border-2 border-black">
+            <div class="font-poster text-[var(--sti-blue)] font-black text-xs uppercase mt-1 tracking-wider">Scan Link</div>
         </div>
 
     </div>
 
     <script>
-        // --- COUNTDOWN LOGIC ---
-        const targetDate = new Date("February 15, 2026 23:59:59").getTime();
+        // --- MUSIC LOGIC ---
+        const music = document.getElementById('bgMusic');
+        const muteBtn = document.getElementById('muteToggle');
+        const muteIcon = document.getElementById('muteIcon');
+        let isPlaying = false;
 
-        const updateCountdown = () => {
+        function toggleMusic(e) {
+            // Prevent event bubbling if necessary
+            if (e) e.stopPropagation();
+
+            if (isPlaying) {
+                music.pause();
+                muteIcon.classList.remove('fa-volume-up');
+                muteIcon.classList.add('fa-volume-mute');
+                isPlaying = false;
+            } else {
+                music.play().then(() => {
+                    muteIcon.classList.remove('fa-volume-mute');
+                    muteIcon.classList.add('fa-volume-up');
+                    isPlaying = true;
+                }).catch(error => {
+                    console.log("Audio play failed (interaction required):", error);
+                });
+            }
+        }
+
+        // Initialize click listener on body to start music (since autoplay is often blocked)
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                toggleMusic();
+            }
+        }, { once: true }); // Only trigger once on first click
+
+        muteBtn.addEventListener('click', toggleMusic);
+
+        // --- COUNTDOWN LOGIC ---
+        // Date 1: Registration Deadline
+        const targetDate1 = new Date("February 15, 2026 23:59:59").getTime();
+        // Date 2: Exam Attendance Validation Deadline
+        const targetDate2 = new Date("February 16, 2026 23:59:59").getTime();
+
+        const updateTimer = (target, idSuffix) => {
             const now = new Date().getTime();
-            const distance = targetDate - now;
+            const distance = target - now;
 
             if (distance < 0) {
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
+                document.getElementById(`days${idSuffix}`).innerText = "00";
+                document.getElementById(`hours${idSuffix}`).innerText = "00";
+                document.getElementById(`minutes${idSuffix}`).innerText = "00";
+                document.getElementById(`seconds${idSuffix}`).innerText = "00";
                 return;
             }
 
@@ -220,14 +365,19 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            document.getElementById(`days${idSuffix}`).innerText = days.toString().padStart(2, '0');
+            document.getElementById(`hours${idSuffix}`).innerText = hours.toString().padStart(2, '0');
+            document.getElementById(`minutes${idSuffix}`).innerText = minutes.toString().padStart(2, '0');
+            document.getElementById(`seconds${idSuffix}`).innerText = seconds.toString().padStart(2, '0');
         };
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        const runCountdowns = () => {
+            updateTimer(targetDate1, "1");
+            updateTimer(targetDate2, "2");
+        };
+
+        setInterval(runCountdowns, 1000);
+        runCountdowns();
     </script>
 </body>
 </html>
